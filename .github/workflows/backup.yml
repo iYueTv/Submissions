@@ -1,0 +1,29 @@
+# 定时备份 Wiki Issues 到 backup/ 目录
+name: Backup Wiki Issues
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: 运行备份脚本
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+          GITHUB_REPO: ${{ vars.GITHUB_REPO || secrets.GITHUB_REPO }}
+        run: node backup/backup.mjs
+      - name: 提交备份文件
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email \
+            "github-actions[bot]@users.noreply.github.com"
+          git add backup/
+          git diff --staged --quiet || \
+            git commit -m "chore: backup wiki issues"
+          git push
