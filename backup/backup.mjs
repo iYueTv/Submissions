@@ -1,12 +1,9 @@
 // 备份脚本：从指定仓库 GitHub Issues 拉取 wiki 页面
-// 运行方式：
-//   本地: GITHUB_REPO=owner/repo GH_PAT=xxx node backup/backup.mjs
-//   CI:   GitHub Action 自动注入 GH_PAT 和 GITHUB_REPO
 
 import { writeFile, mkdir } from "node:fs/promises";
 import { join } from "node:path";
 
-const TARGET_REPO = process.env.GITHUB_REPO || "";
+const TARGET_REPO = process.env.GH_REPO || "";
 const TOKEN = process.env.GH_PAT || process.env.GITHUB_TOKEN || "";
 
 if (!TARGET_REPO) {
