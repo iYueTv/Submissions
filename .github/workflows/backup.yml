@@ -1,4 +1,3 @@
-# 定时备份 Wiki Issues 到 backup/ 目录
 name: Backup Wiki Issues
 
 on:
@@ -16,7 +15,7 @@ jobs:
       - name: 运行备份脚本
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
-          GITHUB_REPO: ${{ vars.GITHUB_REPO || secrets.GITHUB_REPO }}
+          GH_REPO: ${{ vars.GH_REPO || secrets.GH_REPO }}
         run: node backup/backup.mjs
       - name: 提交备份文件
         run: |
