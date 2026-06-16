@@ -1,5 +1,3 @@
-// 备份脚本：从指定仓库 GitHub Issues 拉取 wiki 页面
-
 import { writeFile, mkdir } from "node:fs/promises";
 import { join } from "node:path";
 
@@ -8,7 +6,7 @@ const TOKEN = process.env.GH_PAT || process.env.GITHUB_TOKEN || "";
 
 if (!TARGET_REPO) {
   console.error(
-    "请设置 GITHUB_REPO=owner/repo 指定目标仓库"
+    "请设置 GH_REPO=owner/repo 指定目标仓库"
   );
   process.exit(1);
 }
